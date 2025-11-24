@@ -66,7 +66,7 @@ export default function QuizPage() {
   const handleProfileComplete = (profile: UserProfile) => {
     setUserProfile(profile)
     setShowProfileModal(false)
-    router.push(`/quiz/${quiz.slug}?view=questions`)
+    router.push(`/quiz/${quiz.slug}?quiz=questions`)
   }
 
   if (view === "questions") {

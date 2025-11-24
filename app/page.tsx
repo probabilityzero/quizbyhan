@@ -34,10 +34,10 @@ export default function Home() {
         {/* Hero section */}
         <div className="mb-8 md:mb-12 transition-enter">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-balance mb-3 md:mb-4">
-            Quiz <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">by Han</span>
+            Quiz <span className="bg-gradient-to-r from-primary font-semibold text-2xl to-accent bg-clip-text text-transparent">by Han</span>
           </h1>
           <p className="text-base md:text-lg text-muted-foreground max-w-2xl">
-            Choose from our collection of quizzes and test your expertise across different categories.
+            Choose from the collection of quizzes and test your expertise across different categories.
             {profile && (
               <span className="block mt-2">
                 Welcome back, <span className="text-primary font-semibold">{profile.name}</span>!
@@ -64,62 +64,119 @@ export default function Home() {
 
                     return (
                       <Link key={quiz.id} href={`/quiz/${quiz.slug}`}>
-                        <div className="group h-full bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg hover:border-primary transition-smooth cursor-pointer flex flex-col scale-in">
-                          {/* Banner image */}
-                          <div
-                            className={`h-24 sm:h-28 md:h-32 bg-gradient-to-br ${quiz.accentColor} relative overflow-hidden flex items-center justify-center transition-smooth`}
-                          >
-                            <div className="text-4xl sm:text-5xl md:text-6xl opacity-50">{quiz.icon}</div>
-                            {hasAttempts && (
-                              <div className="absolute top-2 right-2 bg-accent text-accent-foreground text-xs font-bold px-2 sm:px-3 py-1 rounded-full">
-                                ✓ Done
+                        <div className="group h-full bg-card border border-border rounded-xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-300 cursor-pointer flex flex-col">
+                          {/* Header with Icon and Status Badge */}
+                          <div className="relative">
+                            <div
+                              className={`h-40 bg-gradient-to-br ${quiz.accentColor} relative overflow-hidden flex items-center justify-center`}
+                            >
+                              {/* Background Icon */}
+                              <div className="text-7xl md:text-8xl opacity-20 absolute">
+                                {quiz.icon}
                               </div>
-                            )}
+                              
+                              {/* Status Badge */}
+                              {hasAttempts && (
+                                <div className="absolute top-3 right-3 bg-white/95 text-green-600 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
+                                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                  Completed
+                                </div>
+                              )}
+
+                              {/* Tags at bottom with gradient overlay */}
+                              {quiz.tags && quiz.tags.length > 0 && (
+                                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent pt-8 pb-3 px-3">
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {quiz.tags.slice(0, 3).map((tag) => (
+                                      <span
+                                        key={tag}
+                                        className="bg-white/90 backdrop-blur-sm text-gray-800 capitalize text-xs font-medium px-2.5 py-1 rounded-md"
+                                      >
+                                        {tag}
+                                      </span>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
                           </div>
 
-                          {/* Content */}
-                          <div className="p-4 sm:p-5 md:p-6 flex flex-col flex-grow">
-                            <h3 className="text-lg sm:text-xl font-semibold mb-2 group-hover:text-primary transition-smooth line-clamp-2">
+                          {/* Content Section */}
+                          <div className="p-5 pt-3 flex flex-col flex-grow">
+                            <h3 className="text-lg font-bold mb-1 line-clamp-2">
                               {quiz.title}
                             </h3>
-                            <p className="text-xs sm:text-sm text-muted-foreground mb-4 flex-grow line-clamp-2">
+                            {/* Description */}
+                            <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                               {quiz.description}
                             </p>
 
-                            {/* Tags */}
-                            <div className="flex flex-wrap gap-1 sm:gap-2 mb-4">
-                              {quiz.tags?.slice(0, 2).map((tag) => (
-                                <span
-                                  key={tag}
-                                  className="bg-secondary text-secondary-foreground text-xs px-2 py-0.5 rounded"
-                                >
-                                  {tag}
-                                </span>
-                              ))}
+                            {/* Metadata Grid */}
+                            <div className="grid grid-cols-2 gap-4 mb-4 pt-3 border-t border-border/50">
+                              <div className="flex items-start gap-2">
+                                <svg className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-xs text-muted-foreground">Questions</div>
+                                  <div className="text-sm font-semibold">{quiz.questions.length}</div>
+                                </div>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <svg className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                                <div className="flex-1 min-w-0">
+                                  <div className="text-xs text-muted-foreground">Difficulty</div>
+                                  <div className={`text-sm font-semibold capitalize ${
+                                    quiz.difficulty === 'easy' ? 'text-green-500' :
+                                    quiz.difficulty === 'medium' ? 'text-yellow-500' :
+                                    'text-red-500'
+                                  }`}>
+                                    {quiz.difficulty}
+                                  </div>
+                                </div>
+                              </div>
                             </div>
 
-                            {/* Metadata */}
-                            <div className="flex items-center justify-between text-xs text-muted-foreground mb-3 sm:mb-4 border-t border-border pt-3 sm:pt-4">
-                              <span>{quiz.questions.length}Q</span>
-                              <span>•</span>
-                              <span>{quiz.estimatedTime}m</span>
-                              <span>•</span>
-                              <span className="capitalize">{quiz.difficulty[0]}</span>
-                            </div>
-
-                            {/* Progress */}
-                            {hasAttempts && (
-                              <div className="space-y-2">
-                                <div className="w-full bg-muted rounded-full h-1.5 sm:h-2">
+                            {/* Progress Section */}
+                            {hasAttempts ? (
+                              <div className="space-y-2 bg-accent/10 rounded-lg p-3 mt-auto">
+                                <div className="flex items-center justify-between text-xs font-medium">
+                                  <span className="text-muted-foreground">Your Score</span>
+                                  <span className={`font-bold ${
+                                    percentage >= 80 ? 'text-green-500' :
+                                    percentage >= 60 ? 'text-yellow-500' :
+                                    'text-red-500'
+                                  }`}>
+                                    {percentage}%
+                                  </span>
+                                </div>
+                                <div className="w-full bg-muted/50 rounded-full h-2 overflow-hidden">
                                   <div
-                                    className="bg-accent h-1.5 sm:h-2 rounded-full transition-smooth"
+                                    className={`h-2 rounded-full transition-all duration-500 ${
+                                      percentage >= 80 ? 'bg-green-500' :
+                                      percentage >= 60 ? 'bg-yellow-500' :
+                                      'bg-red-500'
+                                    }`}
                                     style={{ width: `${percentage}%` }}
                                   />
                                 </div>
-                                <p className="text-xs font-semibold">
-                                  Score: <span className="text-accent">{percentage}%</span>
-                                </p>
+                                <div className="text-xs text-muted-foreground text-center">
+                                  {lastAttempt!.score} / {lastAttempt!.totalQuestions} correct
+                                </div>
                               </div>
+                            ) : (
+                              <button className="group/btn bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg p-3 text-center mt-auto transition-all duration-200 hover:shadow-md active:scale-[0.98]">
+                                <span className="text-sm font-semibold inline-flex items-center gap-2 group-hover/btn:gap-3 transition-all">
+                                  Start Quiz
+                                  <svg className="w-4 h-4 group-hover/btn:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                  </svg>
+                                </span>
+                              </button>
                             )}
                           </div>
                         </div>

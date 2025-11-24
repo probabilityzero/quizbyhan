@@ -26,18 +26,12 @@ export default function AppHeader() {
   return (
     <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-border transition-smooth">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        <button onClick={() => router.push("/")} className="font-bold text-xl hover:opacity-80 transition-smooth group">
-          <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Quiz</span>
-          <span className="text-xs ml-1 text-muted-foreground group-hover:text-foreground transition-smooth">
-            by Han
-          </span>
-        </button>
-
-        <div className="flex items-center gap-2 md:gap-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
             className="p-2 hover:bg-secondary rounded-lg transition-smooth"
             aria-label="Toggle theme"
+            title={isDark ? "Switch to light" : "Switch to dark"}
           >
             {isDark ? (
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -54,10 +48,21 @@ export default function AppHeader() {
             )}
           </button>
 
+          <button onClick={() => router.push("/")} className="font-bold text-xl hover:opacity-80 transition-smooth group text-left">
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Quiz</span>
+            <span className="text-xs ml-1 text-muted-foreground group-hover:text-foreground transition-smooth">
+              by Han
+            </span>
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2 md:gap-4">
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
               className="p-2 hover:bg-secondary rounded-lg transition-smooth flex items-center gap-2"
+              aria-haspopup="true"
+              aria-expanded={showMenu}
             >
               {profile ? (
                 <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground scale-in">
